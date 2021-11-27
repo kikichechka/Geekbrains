@@ -23,7 +23,7 @@ public class Main {
 
         do {
             do {
-                System.out.print("\nДавайте накормим голодных котиков. Насыпьте в миску корм (введите колличесто грамм): >>> ");
+                System.out.print("\nДавайте накормим голодных котиков. Насыпьте в миску корм (введите количесто грамм): >>> ");
                 answer = sc.nextInt();
             } while (!isSellValid(answer));
             plate.food += answer;
@@ -49,7 +49,7 @@ public class Main {
 
     public static boolean isSellValid(int answer) {
         if (answer < 0) {
-            System.out.println("❌‼Вы не можете добавить в миску отрицательное колличество корма‼❌");
+            System.out.println("❌‼Вы не можете добавить в миску отрицательное количество корма‼❌");
             return false;
         }
         if (answer == 0) {

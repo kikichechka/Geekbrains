@@ -15,7 +15,7 @@ class Cat {
     }
 
     public void eat (Plate p) { //метод поедания еды из тарелки
-        if (p.decreaseFood(appetite)) //если колличество еды уменьшилось
+        if (p.decreaseFood(appetite)) //если количество еды уменьшилось
             satiety = true; // сытость правда
     }
 }

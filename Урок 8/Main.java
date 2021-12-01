@@ -31,8 +31,10 @@ public class Main {
         System.out.println("НАШИ УЧАСТНИКИ: ");
         for (int i = 0; i < participant.length; i++) {
             participant[i] = generateParticipants();
-            System.out.println(i + 1 + "-й участник: " + participant[i]);
         }
+        for (Participants a: participant) {
+            System.out.printf(a + "%s, бегает %s м., прыгает на высоту %s м.!\n", a.name, a.run, a.jump);
+            }
         System.out.print("\nНачнем марафон!!! (нажмите 1 для старта, 0 для выхода) >>>> ");
         int answer = scanner.nextInt();
         int count = 0;
@@ -45,23 +47,22 @@ public class Main {
                     System.out.println();
                     System.out.println(o);
                     for (Participants a : participant) { // идем по игрокам
-
-                        if (o instanceof Wall) {// если препятствие стена
-                            Wall wall = new Wall(((Wall) o).heightWall);
-                            a.wallPassing(wall);
-                            if (!a.passingWall)  // если не преодолел стену
-                                a.jump = a.run = 0; // убираем с препятствия
-                            else
-                                System.out.printf("%s успешно прошел препятствие!\n", a.name);
-                        }
-                        if (o instanceof Treadmill) {// если препятствие дорожка
-                            Treadmill treadmill = new Treadmill(((Treadmill) o).longTreadmill);
-                            a.treadmillPassing(treadmill);
-                            if (!a.passingTreadmill)
-                                a.jump = a.run = 0; // убираем с препятствия
-                            else
-                                System.out.printf("%s успешно прошел препятствие!\n", a.name);
-                        }
+                            if (o instanceof Wall) {// если препятствие стена
+                                Wall wall = new Wall(((Wall) o).heightWall);
+                                a.wallPassing(wall);
+                                if (a.passing)  // если преодолел стену
+                                    System.out.printf("%s успешно прошел препятствие!\n", a.name);
+                                else
+                                    a.jump = a.run = 0;
+                            }
+                            if (o instanceof Treadmill) {// если препятствие дорожка
+                                Treadmill treadmill = new Treadmill(((Treadmill) o).longTreadmill);
+                                a.treadmillPassing(treadmill);
+                                if (a.passing)
+                                    System.out.printf("%s успешно прошел препятствие!\n", a.name);
+                                else
+                                    a.jump = a.run = 0;
+                            }
                     }
                 }
             } while (count == marathons.length);
@@ -89,16 +90,17 @@ public class Main {
     static Participants generateParticipants() {
         String[] names = new String[] { "Дымок", "Уголек", "Апельсин", "Лисенок", "Персик", "Грей", "Сумрак" };
 
-        int heightLength = random.nextInt(3) + 3; // рандомим высоту прыжка и длину бега
+        int run = random.nextInt(4) + 3; // рандомим длину бега
+        int jump = random.nextInt(4) + 3; // рандомим высоту прыжка
         int typeLet = random.nextInt(3); // рандомим участников
 
         switch (typeLet) {
             case 0:
-                return new Human(names[random.nextInt(7)], heightLength, heightLength);
+                return new Human(names[random.nextInt(7)], run, jump);
             case 1:
-                return new Cat(names[random.nextInt(7)], heightLength, heightLength);
+                return new Cat(names[random.nextInt(7)], run, jump);
             case 2:
-                return new Robot(names[random.nextInt(7)], heightLength, heightLength);
+                return new Robot(names[random.nextInt(7)], run, jump);
         }
         return null;
     }
